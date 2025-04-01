@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+</head>
+<body>
+    <h1>Create a New Product</h1>
+    
+    <form action="{% url 'create_product' %}" method="POST">
+        {% csrf_token %}
+        <label for="productId">Product ID:</label>
+        <input type="text" id="productId" name="productId" required><br><br>
+
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required><br><br>
+
+        <label for="productPrice">Product Price:</label>
+        <input type="text" id="productPrice" name="productPrice" required><br><br>
+
+        <input type="submit" value="Create Product">
+    </form>
+    
+    <a href="{% url 'home' %}"><button>Back to Home</button></a>
+
+</body>
+</html>

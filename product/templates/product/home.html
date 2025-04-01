@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+</head>
+<body>
+    <h1>Welcome to the Product Management System</h1>
+
+    <!-- Navigation Links -->
+    <ul>
+        <li><a href="{% url 'create_product' %}">Create Product</a></li>
+        <li><a href="{% url 'view_products' %}">View Products</a></li>
+        <li><a href="{% url 'update_product' %}">Update Product</a></li>
+        <li><a href="{% url 'delete_product' %}">Delete Product</a></li>
+        <li><a href="{% url 'view_external_products' %}">View External Products</a></li>
+        <li><a href="{% url 'generate_otp' %}">Generate OTP</a></li>
+    </ul>
+</body>
+</html>
