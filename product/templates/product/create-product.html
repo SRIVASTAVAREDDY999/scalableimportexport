@@ -4,25 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Product</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        input { margin-bottom: 10px; }
+        label { margin-right: 10px; }
+    </style>
 </head>
 <body>
-    <h1>Create a New Product</h1>
-    
-    <form action="{% url 'create_product' %}" method="POST">
+    <h1>Create Product</h1>
+    <form id="createProductForm">
         {% csrf_token %}
         <label for="productId">Product ID:</label>
-        <input type="text" id="productId" name="productId" required><br><br>
-
+        <input type="text" id="productId" required><br>
+        
         <label for="productName">Product Name:</label>
-        <input type="text" id="productName" name="productName" required><br><br>
-
+        <input type="text" id="productName" required><br>
+        
         <label for="productPrice">Product Price:</label>
-        <input type="text" id="productPrice" name="productPrice" required><br><br>
-
-        <input type="submit" value="Create Product">
+        <input type="number" id="productPrice" step="0.01" required><br>
+        
+        <button type="submit">Create Product</button>
     </form>
-    
-    <a href="{% url 'home' %}"><button>Back to Home</button></a>
 
+    <div id="responseMessage"></div>
+
+    <script>
+        document.getElementById("createProductForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const productId = document.getElementById("productId").value;
+            const productName = document.getElementById("productName").value;
+            const productPrice = document.getElementById("productPrice").value;
+
+            // Validate if all fields are filled
+            if (!productId || !productName || !productPrice) {
+                document.getElementById("responseMessage").innerText = "All fields are required!";
+                return;
+            }
+
+            // Sending POST request with form data
+            const response = await fetch('/create-product/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,  // CSRF token
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    productName: productName,
+                    productPrice: productPrice
+                })
+            });
+
+            // Get JSON response from server
+            const result = await response.json();
+
+            // Show appropriate message based on server response
+            if (response.ok) {
+                document.getElementById("responseMessage").innerText = "Product created successfully!";
+            } else {
+                document.getElementById("responseMessage").innerText = "Error: " + (result.message || "Something went wrong!");
+            }
+        });
+    </script>
 </body>
 </html>
