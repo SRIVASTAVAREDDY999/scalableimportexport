@@ -4,14 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>External Products</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #0ff;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        li {
+            background-color: #1f1f1f;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        li:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 204, 204, 0.2);
+        }
+
+        h2 {
+            color: #00c3c3;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #bbb;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        /* Optional styles for responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            li {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>External Products</h1>
+
+    <!-- Product Listings -->
     <ul>
         {% for product in products %}
             <li>
                 <h2>{{ product.title }}</h2>
-                <p>Price: ${{ product.price }}</p>
+                <p class="price">Price: ${{ product.price }}</p>
                 <p>{{ product.description }}</p>
             </li>
         {% endfor %}

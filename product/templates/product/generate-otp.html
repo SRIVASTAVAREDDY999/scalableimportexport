@@ -4,19 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate OTP</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 255, 255, 0.2);
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #0ff;
+            font-weight: 600;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #0ff;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #00c3c3;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .response-message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #ff6666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Generate OTP</h1>
+    <div class="container">
+        <h1>Generate OTP</h1>
+        <form method="post" action="{% url 'generate_otp' %}">
+            {% csrf_token %}
+            <div>
+                <label for="email">Enter Email:</label>
+                <input type="email" name="email" required placeholder="example@example.com">
+            </div>
 
-    <form method="post" action="{% url 'generate_otp' %}">
-        {% csrf_token %}
-        <label for="email">Enter Email:</label>
-        <input type="email" name="email" required>
-        
-        <label for="purpose">Purpose:</label>
-        <input type="text" name="purpose" value="account verification">
+            <div>
+                <label for="purpose">Purpose:</label>
+                <input type="text" name="purpose" value="account verification" placeholder="Purpose of OTP" readonly>
+            </div>
 
-        <button type="submit">Generate OTP</button>
-    </form>
+            <button type="submit">Generate OTP</button>
+        </form>
+
+        <!-- Optional response message -->
+        <div class="response-message">
+            {% if otp_generated %}
+                <p>Your OTP has been sent to your email!</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
